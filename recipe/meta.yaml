@@ -10,13 +10,14 @@ source:
   sha256: 0dc6ac9415f3cf93b5a62f40b5206fc18b5f081e47828f182e933a2c6abe298a
 
 build:
+  python_version_independent: true   # [is_abi3]
   script:
     - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
     - {{ PYTHON }} -m pip install .[full] -vv --no-deps --ignore-installed
   script_env:
     # Package cargo flags
-    - MATURIN_PEP517_ARGS=--locked --no-default-features --features=ceres-system,fftw-system,gsl  # [not win]
-    - MATURIN_PEP517_ARGS=--locked --no-default-features --features=fftw-system  # [win]
+    - MATURIN_PEP517_ARGS=--locked --no-default-features --features=abi3,ceres-system,fftw-system,gsl  # [not win]
+    - MATURIN_PEP517_ARGS=--locked --no-default-features --features=abi3,fftw-system  # [win]
     # eigen3 discovery, a transitive dependency of ceres-solver
     - CPLUS_INCLUDE_PATH={{ PREFIX }}/include:{{ PREFIX }}/include/eigen3  # [not win]
     - INCLUDE={{ PREFIX }}\Library\include;{{ PREFIX }}\Library\include\eigen3  # [win]
@@ -26,7 +27,7 @@ build:
     # Fix glog-related error when building ceres-solver
     # https://github.com/mhx/dwarfs/issues/201#issuecomment-1958068640
     - CXXFLAGS=-DGLOG_USE_GLOG_EXPORT
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -42,6 +43,7 @@ requirements:
     - pkg-config
     - cargo-bundle-licenses
   host:
+    - python-abi3
     - python
     - pip
     - maturin >=1,<2

@@ -372,5 +372,6 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@anlava](https://github.com/anlava/)
 * [@hombit](https://github.com/hombit/)
 

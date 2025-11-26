@@ -1,5 +1,5 @@
 {% set name = "light-curve-python" %}
-{% set version = "0.10.4" %}
+{% set version = "0.10.5" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/l/light-curve/light_curve-{{ version }}.tar.gz
-  sha256: 583091488dc8af127139df7ab6137b95149fc7667c4e8b76a883b6f60fee9e4b
+  sha256: b3d032837386ace20d2ee8ebc032a8df5cc910b94d9609427fbfc134064737d3
 
 build:
   script:
@@ -26,7 +26,7 @@ build:
     # Fix glog-related error when building ceres-solver
     # https://github.com/mhx/dwarfs/issues/201#issuecomment-1958068640
     - CXXFLAGS=-DGLOG_USE_GLOG_EXPORT
-  number: 1
+  number: 0
 
 requirements:
   build:

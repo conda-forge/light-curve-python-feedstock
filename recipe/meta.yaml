@@ -20,6 +20,8 @@ build:
     # eigen3 discovery, a transitive dependency of ceres-solver
     - CPLUS_INCLUDE_PATH={{ PREFIX }}/include:{{ PREFIX }}/include/eigen3  # [not win]
     - INCLUDE={{ PREFIX }}\Library\include;{{ PREFIX }}\Library\include\eigen3  # [win]
+    # gsl discovery
+    - LIBRARY_PATH={{ PREFIX }}/lib  # [osx and arm64]
   number: 0
 
 requirements:

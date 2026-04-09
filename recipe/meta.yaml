@@ -15,7 +15,8 @@ build:
     - {{ PYTHON }} -m pip install .[full] -vv --no-deps --ignore-installed
   script_env:
     # Package cargo flags
-    - MATURIN_PEP517_ARGS=--locked --no-default-features --features=ceres-system,gsl
+    - MATURIN_PEP517_ARGS=--locked --no-default-features --features=ceres-system,gsl  # [not win]
+    - MATURIN_PEP517_ARGS=--locked --no-default-features --features=ceres-system  # [win]
     # eigen3 discovery, a transitive dependency of ceres-solver
     - CPLUS_INCLUDE_PATH={{ PREFIX }}/include:{{ PREFIX }}/include/eigen3  # [not win]
     - INCLUDE={{ PREFIX }}\Library\include;{{ PREFIX }}\Library\include\eigen3  # [win]

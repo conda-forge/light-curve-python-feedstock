@@ -19,8 +19,13 @@ build:
     # eigen3 discovery, a transitive dependency of ceres-solver
     - CPLUS_INCLUDE_PATH={{ PREFIX }}/include:{{ PREFIX }}/include/eigen3  # [not win]
     - INCLUDE={{ PREFIX }}\Library\include;{{ PREFIX }}\Library\include\eigen3  # [win]
+    # ceres-solver-sys on Windows reads these env vars (no vcpkg in conda builds)
+    - CERES_INCLUDE_DIR={{ PREFIX }}\Library\include  # [win]
+    - EIGEN3_INCLUDE_DIR={{ PREFIX }}\Library\include\eigen3  # [win]
+    - CERES_LIB_DIR={{ PREFIX }}\Library\lib  # [win]
     # gsl discovery
     - LIBRARY_PATH={{ PREFIX }}/lib  # [osx and arm64]
+    - LIB={{ PREFIX }}\Library\lib  # [win]
   number: 0
 
 requirements:

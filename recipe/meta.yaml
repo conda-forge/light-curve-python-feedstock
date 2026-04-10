@@ -26,7 +26,6 @@ build:
     - CERES_LIB_DIR={{ PREFIX }}\Library\lib  # [win]
     # gsl discovery
     - LIBRARY_PATH={{ PREFIX }}/lib  # [osx and arm64]
-    - LIB={{ PREFIX }}\Library\lib  # [win]
   number: 0
 
 requirements:

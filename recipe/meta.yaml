@@ -1,5 +1,5 @@
 {% set name = "light-curve-python" %}
-{% set version = "0.12.2" %}
+{% set version = "0.12.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/l/light-curve/light_curve-{{ version }}.tar.gz
-  sha256: f975d491b1747c1bb946f7314d7da0f6faf8b517073f419214f0e23c2bcc5aaa
+  sha256: da4d3739ff3791b4e5c7517309d73bd9bdd78e12496bc36068be1c39810c29e6
 
 build:
   script:

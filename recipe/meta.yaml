@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/l/light-curve/light_curve-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/source/l/light-curve/light_curve-{{ version }}.tar.gz
   sha256: 04983b81d4e74c80b48a5598efa9b7a8a1c49d6b9310dd881cc23c3665542c25
 
 build:
@@ -26,7 +26,7 @@ build:
     - CERES_LIB_DIR={{ PREFIX }}\Library\lib  # [win]
     # gsl discovery
     - LIBRARY_PATH={{ PREFIX }}/lib  # [osx and arm64]
-  number: 0
+  number: 1
 
 requirements:
   build:

@@ -7,11 +7,6 @@ language: shell
 
 jobs:
   include:
-    - env: CONFIG=linux_aarch64_python3.10.____cpython UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma10
-      os: linux
-      arch: arm64
-      dist: focal
-
     - env: CONFIG=linux_aarch64_python3.11.____cpython UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma10
       os: linux
       arch: arm64
@@ -32,9 +27,9 @@ jobs:
       arch: arm64
       dist: focal
 
-    - env: CONFIG=linux_ppc64le_python3.10.____cpython UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le:alma10
+    - env: CONFIG=linux_aarch64_python3.15.____cp315 UPLOAD_PACKAGES=True PLATFORM=linux-aarch64 DOCKER_IMAGE=quay.io/condaforge/linux-anvil-aarch64:alma10
       os: linux
-      arch: ppc64le
+      arch: arm64
       dist: focal
 
     - env: CONFIG=linux_ppc64le_python3.11.____cpython UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le:alma10
@@ -53,6 +48,11 @@ jobs:
       dist: focal
 
     - env: CONFIG=linux_ppc64le_python3.14.____cp314 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le:alma10
+      os: linux
+      arch: ppc64le
+      dist: focal
+
+    - env: CONFIG=linux_ppc64le_python3.15.____cp315 UPLOAD_PACKAGES=True PLATFORM=linux-ppc64le DOCKER_IMAGE=quay.io/condaforge/linux-anvil-ppc64le:alma10
       os: linux
       arch: ppc64le
       dist: focal

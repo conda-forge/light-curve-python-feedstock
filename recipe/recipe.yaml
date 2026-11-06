@@ -1,0 +1,107 @@
+schema_version: 1
+
+context:
+  version: "0.14.0"
+
+package:
+  name: light-curve-python
+  version: ${{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/source/l/light-curve/light_curve-${{ version }}.tar.gz
+  sha256: cb2103b4a873ae798a8ed9408bd7e9ce45340c36598c3b169545d5ca701aff26
+
+build:
+  number: 2
+  skip:
+    - is_abi3 and not is_python_min
+  python:
+    version_independent: ${{ is_abi3 }}
+  script:
+    env:
+      # Package cargo flags
+      MATURIN_PEP517_ARGS: --locked --no-default-features --features=${{ "abi3," if is_abi3 else "" }}${{ "ceres-system" if win else "ceres-system,gsl" }}
+    content:
+      - if: win
+        then:
+          # eigen3 discovery, a transitive dependency of ceres-solver
+          - set "INCLUDE=%LIBRARY_INC%;%LIBRARY_INC%\eigen3;%INCLUDE%"
+          # ceres-solver-sys on Windows reads these env vars (no vcpkg in conda builds)
+          - set "CERES_INCLUDE_DIR=%LIBRARY_INC%"
+          - set "EIGEN3_INCLUDE_DIR=%LIBRARY_INC%\eigen3"
+          - set "CERES_LIB_DIR=%LIBRARY_LIB%"
+        else:
+          # eigen3 discovery, a transitive dependency of ceres-solver
+          - export CPLUS_INCLUDE_PATH="${PREFIX}/include:${PREFIX}/include/eigen3"
+      - if: osx and arm64
+        then:
+          # gsl discovery
+          - export LIBRARY_PATH="${PREFIX}/lib"
+      - cargo-bundle-licenses --format yaml --output THIRDPARTY.yml
+      - python -m pip install .[full] -vv --no-deps --ignore-installed
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('rust') }}
+    - if: build_platform != target_platform
+      then:
+        - python
+        - cross-python_${{ target_platform }}
+        - crossenv
+        - maturin >=1,<2
+    - cmake
+    - pkgconf
+    - cargo-bundle-licenses
+  host:
+    - python
+    - pip
+    - maturin >=1,<2
+    - ceres-solver >=2.2,<2.3
+    - if: not win
+      then: gsl >=2.1,<3.0
+    - if: linux
+      then: libblas
+    - if: is_abi3
+      then:
+        - python-abi3
+        - python ${{ python_min }}.*
+  run:
+    - python
+    - numpy <3
+    - iminuit >=2.21,<3
+    - scipy >=1,<2
+
+tests:
+  - python:
+      imports:
+        - light_curve
+      pip_check: true
+      python_version:
+        - "*"
+        - if: is_abi3
+          then:
+            - ${{ python_min }}.*
+  - if: is_abi3
+    then:
+      - requirements:
+          run:
+            - abi3audit
+            - python ${{ python_min }}.*
+        script:
+          - abi3audit -s -v --assume-minimum-abi3 ${{ python_min }} ${{ "$SP_DIR/light_curve/light_curve.abi3.so" if unix else "%SP_DIR%\\light_curve\\light_curve.pyd" }}
+
+about:
+  summary: Feature extractor from noisy time series
+  license: GPL-3.0-or-later
+  license_file:
+    - THIRDPARTY.yml
+    - LICENSE
+  homepage: https://github.com/light-curve/light-curve-python
+
+extra:
+  recipe-maintainers:
+    - anlava
+    - hombit

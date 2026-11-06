@@ -1,5 +1,5 @@
 {% set name = "light-curve-python" %}
-{% set version = "0.13.3" %}
+{% set version = "0.14.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://files.pythonhosted.org/packages/source/l/light-curve/light_curve-{{ version }}.tar.gz
-  sha256: e8883064f577a600c781348be76f097e10595841080ba7b43d2944f3fbcefc56
+  sha256: cb2103b4a873ae798a8ed9408bd7e9ce45340c36598c3b169545d5ca701aff26
 
 build:
   script:
@@ -39,7 +39,7 @@ requirements:
     - crossenv  # [build_platform != target_platform]
     - maturin >=1,<2  # [build_platform != target_platform]
     - cmake
-    - pkg-config
+    - pkgconf
     - cargo-bundle-licenses
   host:
     - python
